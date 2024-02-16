@@ -48,9 +48,46 @@ var popular = [
   },
 ];
 
+var cart = [];
+function addcart() {
+  document.querySelector(".products").addEventListener("click", function (e) {
+    if (e.target.classList.contains("add")) {
+      cart.push(products[e.target.dataset.index]);
+    }
+  });
+}
+
+function showcart() {
+  document.querySelector(".carticon").addEventListener("click", () => {
+    document.querySelector(".cartexpnd").style.display = "block";
+    var clutter = "";
+    cart.forEach((obj, ind) => {
+      clutter += `<div
+      class="w-20 h-20 bg-red-500 flex-shrink-0 rounded-2xl border-4 border-white overflow-hidden"
+    >
+      <img
+        class="w-full h-full object-cover"
+        src="${obj.image}"
+        alt=""
+      />
+    </div>
+    <div class="data py-2 w-full ">
+      <h1 class="leading-none font-semibold">${obj.headline}</h1>
+      <h4 class="leading-none mt-2 text-sm font-semibold opacity-20">
+        Radhe Furniture..
+      </h4>
+      <h4 class="mt-3 font-semibold text-zinc-900">&#8377 ${obj.price}</h4>
+    </div>`;
+      document.querySelector(".cartexpnd").innerHTML = clutter;
+    });
+  });
+}
+showcart();
+addcart();
+
 function produtcsData() {
   var clutter = "";
-  products.forEach((obj) => {
+  products.forEach((obj, index) => {
     clutter += `<div class="product w-fit rounded-xl p-2 bg-white">
           <div class="image w-[14rem] h-[13rem] bg-zinc-200 rounded-xl">
           <img src="${obj.image}" alt="img"/></div>
@@ -63,8 +100,8 @@ function produtcsData() {
                 <h3 class="font-semibold opacity-20">Radhe-Radhe</h3>
                 <h4 class="font-semibold mt-2">&#8377 ${obj.price}</h4>
               </div>
-              <button class="w-10 h-10 rounded-full shader text-yellow-400">
-                <i class="ri-add-line"></i>
+              <button  data-index="${index}" class=" add w-10 h-10 rounded-full shader text-yellow-400">
+                <i data-index="${index}" class=" add ri-add-line"></i>
               </button>
             </div>
           </div>
